@@ -3,11 +3,17 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateUsersCommand } from './use-cases/create-user-use-case';
 import { CreateUserDto } from './dto/createUser.Dto';
+import { UsersQueryRepository } from '../infrastructure/users/users.query.repository';
+import { exceptionHandler } from '../../common/exception-handler';
+import { ResultCode } from '../../common/result-code-enum';
 
 @UseGuards(BasicAuthGuard)
 @Controller('sa/users')
 export class SAUsersController {
-  constructor(private commandBus: CommandBus) {}
+  constructor(
+    private commandBus: CommandBus,
+    private readonly usersQueryRepo: UsersQueryRepository,
+  ) {}
 
   // @Get()
   // async getUsers() {
@@ -21,10 +27,12 @@ export class SAUsersController {
       new CreateUsersCommand(createUserDto),
     );
     console.log(userId);
-    return userId;
-    // if (userId) {
-    //   return await this.usersQueryRepo.getUserById(userId);
+
+    // if (!userId) {
+    //   return exceptionHandler(ResultCode.NotFound);
     // }
+
+    return await this.usersQueryRepo.getUserById(userId);
   }
 
   // @Delete(':id')

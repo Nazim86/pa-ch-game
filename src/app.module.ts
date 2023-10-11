@@ -11,6 +11,7 @@ import { User, UserSchema } from './api/entities/user.schema';
 import { CreateUsersUseCase } from './api/superadmin/use-cases/create-user-use-case';
 import { SAUsersController } from './api/superadmin/sa.users.controller';
 import { UsersRepository } from './api/infrastructure/users/users.repository';
+import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
 
 const mongooseModels = [{ name: User.name, schema: UserSchema }];
 
@@ -24,6 +25,6 @@ const useCases = [CreateUsersUseCase];
     MongooseModule.forFeature(mongooseModels),
   ],
   controllers: [AppController, SAUsersController],
-  providers: [AppService, UsersRepository, ...useCases],
+  providers: [AppService, UsersRepository, UsersQueryRepository, ...useCases],
 })
 export class AppModule {}
