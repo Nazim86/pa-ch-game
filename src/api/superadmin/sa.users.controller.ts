@@ -1,11 +1,9 @@
-import { BasicAuthGuard } from '../public/auth/guards/basic-auth.guard';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateUsersCommand } from './use-cases/create-user-use-case';
 import { CreateUserDto } from './dto/createUser.Dto';
 import { UsersQueryRepository } from '../infrastructure/users/users.query.repository';
-import { exceptionHandler } from '../../common/exception-handler';
-import { ResultCode } from '../../common/result-code-enum';
+import { BasicAuthGuard } from '../public/auth/guards/basic-auth.guard';
 
 @UseGuards(BasicAuthGuard)
 @Controller('sa/users')

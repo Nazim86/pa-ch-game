@@ -1,10 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
+import { creatingUser } from '../functions/users-functions';
+import { createUserDto } from '../data/user-data';
+import { appSettings } from '../../src/app.settings';
 
-describe('AppController (e2e)', () => {
+describe('SuperAdmin User (e2e)', () => {
   let app: INestApplication;
+  let httpServer;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -12,14 +15,14 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app = appSettings(app);
     await app.init();
+
+    httpServer = app.getHttpServer();
   });
 
   it('Create User', async () => {
-    const result = await request(app.getHttpServer())
-      .post('sa/users')
-      .expect(200);
-    console.log(result.body);
-    return result;
+    const user = await creatingUser(httpServer, createUserDto);
+    console.log(user.body);
   });
 });

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 export const configModule = ConfigModule.forRoot({ isGlobal: true });
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -12,6 +11,8 @@ import { CreateUsersUseCase } from './api/superadmin/use-cases/create-user-use-c
 import { SAUsersController } from './api/superadmin/sa.users.controller';
 import { UsersRepository } from './api/infrastructure/users/users.repository';
 import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
+import { AuthModule } from './api/public/auth/auth.module';
+import { BasicStrategy } from './api/public/auth/strategies/basic.strategy';
 
 const mongooseModels = [{ name: User.name, schema: UserSchema }];
 
@@ -25,6 +26,12 @@ const useCases = [CreateUsersUseCase];
     MongooseModule.forFeature(mongooseModels),
   ],
   controllers: [AppController, SAUsersController],
-  providers: [AppService, UsersRepository, UsersQueryRepository, ...useCases],
+  providers: [
+    AppService,
+    UsersRepository,
+    BasicStrategy,
+    UsersQueryRepository,
+    ...useCases,
+  ],
 })
 export class AppModule {}
