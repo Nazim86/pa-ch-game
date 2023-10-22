@@ -13,6 +13,7 @@ import { UsersQueryRepository } from './api/infrastructure/users/users.query.rep
 import { QuestsController } from './api/superadmin/sa.quests.controller';
 import { Quest, QuestSchema } from './api/entities/quest.schema';
 import { QuestRepository } from './api/infrastructure/quests/quest.repository';
+import { QuestsQueryRepository } from './api/infrastructure/quests/quest.query.repository';
 
 export const configModule = ConfigModule.forRoot({ isGlobal: true });
 
@@ -36,6 +37,7 @@ const useCases = [CreateUsersUseCase];
     UsersRepository,
     UsersQueryRepository,
     QuestRepository,
+    QuestsQueryRepository,
     ...useCases,
   ],
 })

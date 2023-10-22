@@ -1,17 +1,22 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Quest } from '../entities/quest.schema';
 import { CreateQuestDto } from './dto/questCreate.dto';
-import { Model } from 'mongoose';
+import { CommandBus } from '@nestjs/cqrs';
+import { CreateQuestCommand } from './use-cases/create-quest-use-case';
+import { QuestsQueryRepository } from '../infrastructure/quests/quest.query.repository';
 
-@Controller('sa/quest')
+@Controller('sa/quests')
 export class QuestsController {
-  constructor(@InjectModel(Quest.name) private questModel: Model<Quest>) {}
+  constructor(
+    private commandBus: CommandBus,
+    private readonly questQueryRepo: QuestsQueryRepository,
+  ) {}
 
   @Post()
   async createQuest(@Body() createQuestDto: CreateQuestDto) {
-    const newQuest = Quest.createQuest(createQuestDto);
-    const result = await newQuest.save();
-    return result;
+    const questId = await this.commandBus.execute(
+      new CreateQuestCommand(createQuestDto),
+    );
+
+    return await this.questQueryRepo.getQuestById(questId);
   }
 }
