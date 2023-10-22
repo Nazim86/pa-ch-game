@@ -12,12 +12,12 @@ export class QuestRepository {
     return quest.save();
   }
 
-  async updateQuest(dto: QuestApproveDto) {
+  async updateApproveQuest(dto: QuestApproveDto) {
     const isUpdated = await this.QuestModel.updateOne(
       { _id: new Types.ObjectId(dto.questId) },
       { approved: dto.approved },
     );
 
-    return isUpdated;
+    return isUpdated.acknowledged;
   }
 }

@@ -22,6 +22,6 @@ export class ApproveQuestUseCase {
       throw new NotFoundException();
     }
 
-    return await this.questRepository.updateQuest(command.dto);
+    return await this.questRepository.updateApproveQuest(command.dto);
   }
 }

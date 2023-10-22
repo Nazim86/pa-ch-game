@@ -13,9 +13,8 @@ export class QuestsQueryRepository {
   }
 
   async findQuestById(questId: string) {
-    console.log(questId);
     const quest = await this.QuestModel.findById(new Types.ObjectId(questId));
-    console.log(quest);
+
     return quest;
   }
 }
