@@ -12,11 +12,10 @@ export class QuestsQueryRepository {
     return quest;
   }
 
-  async findById(questId: string) {
-    const quest = await this.QuestModel.findById({
-      _id: new Types.ObjectId(questId),
-    });
-
+  async findQuestById(questId: string) {
+    console.log(questId);
+    const quest = await this.QuestModel.findById(new Types.ObjectId(questId));
+    console.log(quest);
     return quest;
   }
 }

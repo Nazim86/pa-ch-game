@@ -7,6 +7,7 @@ import { QuestApproveDto } from './dto/quest-qpprove.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Quest } from '../entities/quest.schema';
 import { Model } from 'mongoose';
+import { ApprovedQuestCommand } from './use-cases/approved-quest.use-case';
 
 @Controller('sa/quests')
 export class QuestsController {
@@ -26,5 +27,7 @@ export class QuestsController {
   }
 
   @Put()
-  async approveQuest(@Body() dto: QuestApproveDto) {}
+  async approveQuest(@Body() dto: QuestApproveDto) {
+    return await this.commandBus.execute(new ApprovedQuestCommand(dto));
+  }
 }

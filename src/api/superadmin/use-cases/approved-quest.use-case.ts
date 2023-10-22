@@ -9,15 +9,15 @@ export class ApprovedQuestCommand {
 }
 
 @CommandHandler(ApprovedQuestCommand)
-export class CreateQuestUseCase {
+export class ApproveQuestUseCase {
   constructor(
     private readonly questQueryRepo: QuestsQueryRepository,
     private readonly questRepository: QuestRepository,
   ) {}
 
   async execute(command: ApprovedQuestCommand) {
-    const quest = await this.questQueryRepo.findById(command.dto.questId);
-
+    const quest = await this.questQueryRepo.findQuestById(command.dto.questId);
+    console.log(quest);
     if (!quest) {
       throw new NotFoundException();
     }
