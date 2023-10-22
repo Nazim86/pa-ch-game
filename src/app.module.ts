@@ -14,6 +14,7 @@ import { QuestsController } from './api/superadmin/sa.quests.controller';
 import { Quest, QuestSchema } from './api/entities/quest.schema';
 import { QuestRepository } from './api/infrastructure/quests/quest.repository';
 import { QuestsQueryRepository } from './api/infrastructure/quests/quest.query.repository';
+import { CreateQuestUseCase } from './api/superadmin/use-cases/create-quest-use-case';
 
 export const configModule = ConfigModule.forRoot({ isGlobal: true });
 
@@ -22,7 +23,7 @@ const mongooseModels = [
   { name: Quest.name, schema: QuestSchema },
 ];
 
-const useCases = [CreateUsersUseCase];
+const useCases = [CreateUsersUseCase, CreateQuestUseCase];
 
 @Module({
   imports: [

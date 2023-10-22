@@ -23,8 +23,8 @@ export class CreateQuestUseCase {
 
   async execute(command: CreateQuestCommand) {
     const newQuest: QuestDocument = this.QuestModel.createQuest(
-      command.createQuestDto.title,
-      command.createQuestDto.questContent,
+      command.createQuestDto,
+      this.QuestModel,
     );
 
     try {
