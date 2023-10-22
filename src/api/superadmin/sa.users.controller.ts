@@ -1,13 +1,16 @@
-import { BasicAuthGuard } from '../public/auth/guards/basic-auth.guard';
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { CreateUsersCommand } from './use-cases/create-user-use-case';
-import { CreateUserDto } from './dto/createUser.Dto';
+import {Body, Controller, Post} from '@nestjs/common';
+import {CommandBus} from '@nestjs/cqrs';
+import {CreateUsersCommand} from './use-cases/create-user-use-case';
+import {CreateUserDto} from './dto/createUser.Dto';
+import {UsersQueryRepository} from '../infrastructure/users/users.query.repository';
 
-@UseGuards(BasicAuthGuard)
+//@UseGuards(BasicAuthGuard)
 @Controller('sa/users')
 export class SAUsersController {
-  constructor(private commandBus: CommandBus) {}
+  constructor(
+    private commandBus: CommandBus,
+    private readonly usersQueryRepo: UsersQueryRepository,
+  ) {}
 
   // @Get()
   // async getUsers() {
@@ -21,10 +24,12 @@ export class SAUsersController {
       new CreateUsersCommand(createUserDto),
     );
     console.log(userId);
-    return userId;
-    // if (userId) {
-    //   return await this.usersQueryRepo.getUserById(userId);
+
+    // if (!userId) {
+    //   return exceptionHandler(ResultCode.NotFound);
     // }
+
+    return await this.usersQueryRepo.getUserById(userId);
   }
 
   // @Delete(':id')
