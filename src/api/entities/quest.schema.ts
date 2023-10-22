@@ -1,47 +1,45 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, HydratedDocument, Model } from 'mongoose';
 import { CreateQuestDto } from '../superadmin/dto/questCreate.dto';
-import { HydratedDocument, Model } from 'mongoose';
 
 export type QuestDocument = HydratedDocument<Quest>;
 
-/*export type QuestionModelStaticType = {
-    createQuest: (
-        createQuestDto: CreateQuestDto,
-       // questModel: QuestModelType
-    ) => QuestDocument;
-}*/
+export type QuestModelStaticType = {
+  createQuest: (
+    title: string,
+    questContent: string,
+    solution: string,
+    approved: boolean,
+  ) => QuestDocument;
+};
 
-export type QuestModelType = Model<Quest>;
-
-//& QuestionModelStaticType
+export type QuestModelTYpe = Model<Quest> & QuestModelStaticType;
 
 @Schema()
-export class Quest {
+export class Quest extends Document {
   @Prop({ required: true })
   title: string;
 
   @Prop({ required: true })
   questContent: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: null })
   solution: string | null;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: false })
   approved: boolean;
 
-  createQuest(createQuestDto: CreateQuestDto) {
-    const newQuest = {
-      title: createQuestDto.title,
-      questContent: createQuestDto.questContent,
-      solution: null,
-      approved: false,
-    };
-
+  static createQuest(dto: CreateQuestDto): Quest {
+    const newQuest = new Quest();
+    newQuest.questContent = dto.questContent;
+    newQuest.title = dto.title;
+    newQuest.solution = null;
+    newQuest.approved = false;
     return newQuest;
   }
 }
 
 export const QuestSchema = SchemaFactory.createForClass(Quest);
-//const questStaticMethods = { createQuest: Quest.createQuest };
+const questStaticMethods = { createQuest: Quest.createQuest };
 
-//QuestSchema.statics = questStaticMethods;
+QuestSchema.statics = questStaticMethods;

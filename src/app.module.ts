@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-export const configModule = ConfigModule.forRoot({ isGlobal: true });
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -12,8 +10,15 @@ import { CreateUsersUseCase } from './api/superadmin/use-cases/create-user-use-c
 import { SAUsersController } from './api/superadmin/sa.users.controller';
 import { UsersRepository } from './api/infrastructure/users/users.repository';
 import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
+import { QuestsController } from './api/superadmin/sa.quests.controller';
+import { Quest, QuestSchema } from './api/entities/quest.schema';
 
-const mongooseModels = [{ name: User.name, schema: UserSchema }];
+export const configModule = ConfigModule.forRoot({ isGlobal: true });
+
+const mongooseModels = [
+  { name: User.name, schema: UserSchema },
+  { name: Quest.name, schema: QuestSchema },
+];
 
 const useCases = [CreateUsersUseCase];
 
@@ -24,7 +29,7 @@ const useCases = [CreateUsersUseCase];
     CqrsModule,
     MongooseModule.forFeature(mongooseModels),
   ],
-  controllers: [AppController, SAUsersController],
+  controllers: [AppController, SAUsersController, QuestsController],
   providers: [AppService, UsersRepository, UsersQueryRepository, ...useCases],
 })
 export class AppModule {}

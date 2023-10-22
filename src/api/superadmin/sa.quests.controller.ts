@@ -2,17 +2,16 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Quest } from '../entities/quest.schema';
 import { CreateQuestDto } from './dto/questCreate.dto';
+import { Model } from 'mongoose';
 
-@Controller('api/quest')
+@Controller('sa/quest')
 export class QuestsController {
-  constructor(@InjectModel(Quest.name) private questModel: Quest) {}
+  constructor(@InjectModel(Quest.name) private questModel: Model<Quest>) {}
 
-  @Post('create-quest')
+  @Post()
   async createQuest(@Body() createQuestDto: CreateQuestDto) {
-    try {
-      return this.questModel.createQuest(createQuestDto);
-    } catch (error) {
-      console.log('создание квеста не удалось');
-    }
+    const newQuest = Quest.createQuest(createQuestDto);
+    const result = await newQuest.save();
+    return result;
   }
 }
