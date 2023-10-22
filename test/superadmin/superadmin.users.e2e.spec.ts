@@ -4,6 +4,7 @@ import { AppModule } from '../../src/app.module';
 import { creatingUser } from '../functions/users-functions';
 import { createUserDto } from '../data/user-data';
 import { appSettings } from '../../src/app.settings';
+import * as request from 'supertest';
 
 describe('SuperAdmin User (e2e)', () => {
   let app: INestApplication;
@@ -19,6 +20,15 @@ describe('SuperAdmin User (e2e)', () => {
     await app.init();
 
     httpServer = app.getHttpServer();
+  });
+
+  it('Delete all data', async () => {
+    const result = await request(httpServer)
+      .delete('/delete/all-data')
+      .auth('admin', 'admin')
+      .send();
+
+    expect(result.status).toBe(200);
   });
 
   it('Create User', async () => {

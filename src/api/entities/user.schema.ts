@@ -8,12 +8,12 @@ export type UserModelStaticType = {
   createUser: (
     createUserDto: CreateUserDto,
     passwordHash: string,
-    UserModel: UserModelTYpe,
+    UserModel: UserModelType,
     isConfirmed?: boolean,
   ) => UserDocument;
 };
 
-export type UserModelTYpe = Model<User> & UserModelStaticType;
+export type UserModelType = Model<User> & UserModelStaticType;
 
 @Schema()
 export class User {
@@ -38,7 +38,7 @@ export class User {
   static createUser(
     createUserDto: CreateUserDto,
     passwordHash: string,
-    UserModel: UserModelTYpe,
+    UserModel: UserModelType,
     isConfirmed?: boolean,
   ) {
     const newUser = {

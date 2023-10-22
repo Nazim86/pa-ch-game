@@ -13,6 +13,7 @@ import { UsersRepository } from './api/infrastructure/users/users.repository';
 import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
 import { AuthModule } from './api/public/auth/auth.module';
 import { BasicStrategy } from './api/public/auth/strategies/basic.strategy';
+import { DeleteController } from './api/delete-all-data/delete.controller';
 
 const mongooseModels = [{ name: User.name, schema: UserSchema }];
 
@@ -25,7 +26,7 @@ const useCases = [CreateUsersUseCase];
     CqrsModule,
     MongooseModule.forFeature(mongooseModels),
   ],
-  controllers: [AppController, SAUsersController],
+  controllers: [AppController, SAUsersController, DeleteController],
   providers: [
     AppService,
     UsersRepository,
