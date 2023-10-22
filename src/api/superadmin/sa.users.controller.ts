@@ -1,8 +1,8 @@
-import {Body, Controller, Post} from '@nestjs/common';
-import {CommandBus} from '@nestjs/cqrs';
-import {CreateUsersCommand} from './use-cases/create-user-use-case';
-import {CreateUserDto} from './dto/createUser.Dto';
-import {UsersQueryRepository} from '../infrastructure/users/users.query.repository';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { CreateUsersCommand } from './use-cases/create-user-use-case';
+import { CreateUserDto } from './dto/createUser.Dto';
+import { UsersQueryRepository } from '../infrastructure/users/users.query.repository';
 
 //@UseGuards(BasicAuthGuard)
 @Controller('sa/users')
