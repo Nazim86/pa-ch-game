@@ -5,12 +5,7 @@ import { CreateQuestDto } from '../superadmin/dto/questCreate.dto';
 export type QuestDocument = HydratedDocument<Quest>;
 
 export type QuestModelStaticType = {
-  createQuest: (
-    title: string,
-    questContent: string,
-    solution: string,
-    approved: boolean,
-  ) => QuestDocument;
+  createQuest: (title: string, questContent: string) => QuestDocument;
 };
 
 export type QuestModelTYpe = Model<Quest> & QuestModelStaticType;
@@ -23,9 +18,6 @@ export class Quest extends Document {
   @Prop({ required: true })
   questContent: string;
 
-  @Prop({ required: true, default: null })
-  solution: string | null;
-
   @Prop({ required: true, default: false })
   approved: boolean;
 
@@ -33,8 +25,6 @@ export class Quest extends Document {
     const newQuest = new Quest();
     newQuest.questContent = dto.questContent;
     newQuest.title = dto.title;
-    newQuest.solution = null;
-    newQuest.approved = false;
     return newQuest;
   }
 }

@@ -12,6 +12,7 @@ import { UsersRepository } from './api/infrastructure/users/users.repository';
 import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
 import { QuestsController } from './api/superadmin/sa.quests.controller';
 import { Quest, QuestSchema } from './api/entities/quest.schema';
+import { QuestRepository } from './api/infrastructure/quests/quest.repository';
 
 export const configModule = ConfigModule.forRoot({ isGlobal: true });
 
@@ -30,6 +31,12 @@ const useCases = [CreateUsersUseCase];
     MongooseModule.forFeature(mongooseModels),
   ],
   controllers: [AppController, SAUsersController, QuestsController],
-  providers: [AppService, UsersRepository, UsersQueryRepository, ...useCases],
+  providers: [
+    AppService,
+    UsersRepository,
+    UsersQueryRepository,
+    QuestRepository,
+    ...useCases,
+  ],
 })
 export class AppModule {}
