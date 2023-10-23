@@ -3,7 +3,6 @@ import { CommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument, UserModelType } from '../../entities/user.schema';
-import { UsersRepository } from '../../infrastructure/users/users.repository';
 import { exceptionHandler } from '../../../common/exception-handler';
 import { ResultCode } from '../../../common/result-code-enum';
 
@@ -13,8 +12,7 @@ export class CreateUsersCommand {
 @CommandHandler(CreateUsersCommand)
 export class CreateUsersUseCase {
   constructor(
-    @InjectModel(User.name) private UserModel: UserModelType,
-    private readonly usersRepository: UsersRepository,
+    @InjectModel(User.name) private UserModel: UserModelType, //private readonly usersRepository: UsersRepository,
   ) {}
 
   async execute(command: CreateUsersCommand) {
@@ -30,11 +28,13 @@ export class CreateUsersUseCase {
     );
 
     try {
-      await this.usersRepository.saveUser(newUser);
+      await newUser.save();
     } catch (e) {
       console.log(e);
       exceptionHandler(ResultCode.BadRequest);
     }
+    //return newUser.id;
+
     return newUser.id;
   }
 }

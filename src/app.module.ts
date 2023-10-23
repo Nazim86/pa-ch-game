@@ -10,8 +10,6 @@ import { User, UserSchema } from './api/entities/user.schema';
 import { CreateUsersUseCase } from './api/superadmin/use-cases/create-user-use-case';
 import { SaUserController } from './api/superadmin/sa.user.controller';
 import { UsersRepository } from './api/infrastructure/users/users.repository';
-import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
-import { AuthModule } from './api/public/auth/auth.module';
 import { BasicStrategy } from './api/public/auth/strategies/basic.strategy';
 import { DeleteController } from './api/delete-all-data/delete.controller';
 
@@ -32,7 +30,7 @@ const useCases = [CreateUsersUseCase];
     AppService,
     UsersRepository,
     BasicStrategy,
-    UsersQueryRepository,
+    //UsersQueryRepository,
     ...useCases,
   ],
 })
