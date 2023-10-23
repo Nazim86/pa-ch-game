@@ -8,7 +8,7 @@ import * as process from 'process';
 import { CqrsModule } from '@nestjs/cqrs';
 import { User, UserSchema } from './api/entities/user.schema';
 import { CreateUsersUseCase } from './api/superadmin/use-cases/create-user-use-case';
-import { SAUsersController } from './api/superadmin/sa.users.controller';
+import { SaUserController } from './api/superadmin/sa.user.controller';
 import { UsersRepository } from './api/infrastructure/users/users.repository';
 import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
 import { AuthModule } from './api/public/auth/auth.module';
@@ -21,12 +21,13 @@ const useCases = [CreateUsersUseCase];
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     configModule,
     MongooseModule.forRoot(process.env.MONGOOSE_URL),
     CqrsModule,
     MongooseModule.forFeature(mongooseModels),
   ],
-  controllers: [AppController, SAUsersController, DeleteController],
+  controllers: [AppController, SaUserController, DeleteController],
   providers: [
     AppService,
     UsersRepository,

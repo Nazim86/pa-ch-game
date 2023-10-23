@@ -7,7 +7,7 @@ import { BasicAuthGuard } from '../public/auth/guards/basic-auth.guard';
 
 @UseGuards(BasicAuthGuard)
 @Controller('sa/users')
-export class SAUsersController {
+export class SaUserController {
   constructor(
     private commandBus: CommandBus,
     private readonly usersQueryRepo: UsersQueryRepository,
