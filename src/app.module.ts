@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-export const configModule = ConfigModule.forRoot({ isGlobal: true });
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -8,29 +7,39 @@ import * as process from 'process';
 import { CqrsModule } from '@nestjs/cqrs';
 import { User, UserSchema } from './api/entities/user.schema';
 import { CreateUsersUseCase } from './api/superadmin/use-cases/create-user-use-case';
-import { SaUserController } from './api/superadmin/sa.user.controller';
+import { SAUsersController } from './api/superadmin/sa.users.controller';
 import { UsersRepository } from './api/infrastructure/users/users.repository';
-import { BasicStrategy } from './api/public/auth/strategies/basic.strategy';
-import { DeleteController } from './api/delete-all-data/delete.controller';
+import { UsersQueryRepository } from './api/infrastructure/users/users.query.repository';
+import { QuestsController } from './api/superadmin/sa.quests.controller';
+import { Quest, QuestSchema } from './api/entities/quest.schema';
+import { QuestRepository } from './api/infrastructure/quests/quest.repository';
+import { QuestsQueryRepository } from './api/infrastructure/quests/quest.query.repository';
+import { CreateQuestUseCase } from './api/superadmin/use-cases/create-quest-use-case';
+import { ApproveQuestUseCase } from './api/superadmin/use-cases/approved-quest.use-case';
 
-const mongooseModels = [{ name: User.name, schema: UserSchema }];
+export const configModule = ConfigModule.forRoot({ isGlobal: true });
 
-const useCases = [CreateUsersUseCase];
+const mongooseModels = [
+  { name: User.name, schema: UserSchema },
+  { name: Quest.name, schema: QuestSchema },
+];
+
+const useCases = [CreateUsersUseCase, CreateQuestUseCase, ApproveQuestUseCase];
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     configModule,
     MongooseModule.forRoot(process.env.MONGOOSE_URL),
     CqrsModule,
     MongooseModule.forFeature(mongooseModels),
   ],
-  controllers: [AppController, SaUserController, DeleteController],
+  controllers: [AppController, SAUsersController, QuestsController],
   providers: [
     AppService,
     UsersRepository,
-    BasicStrategy,
-    //UsersQueryRepository,
+    UsersQueryRepository,
+    QuestRepository,
+    QuestsQueryRepository,
     ...useCases,
   ],
 })
