@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Logger } from "@nestjs/common";
 import { AppModule } from '../../src/app.module';
 import {
   creatingUser,
@@ -15,7 +15,8 @@ describe('SuperAdmin User (e2e)', () => {
   let httpServer;
   let userId;
 
-  beforeEach(async () => {
+  jest.setTimeout(60 * 1000);
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -32,6 +33,8 @@ describe('SuperAdmin User (e2e)', () => {
       .delete('/delete/all-data')
       .auth('admin', 'admin')
       .send();
+
+    console.log(result.body);
 
     expect(result.status).toBe(200);
   });

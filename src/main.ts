@@ -1,9 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { INestApplication } from "@nestjs/common";
+import { appSettings } from "./app.settings";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+
+
+  const rawApp: INestApplication = await NestFactory.create(AppModule);
+
+  const app = appSettings(rawApp);
+
+ // app.enableCors();
 
   const config = new DocumentBuilder()
     .setTitle('PaCh game example')

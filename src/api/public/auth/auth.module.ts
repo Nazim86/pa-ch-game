@@ -4,7 +4,7 @@ import { AccessTokenStrategy } from './strategies/access-token.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
 import { Module } from '@nestjs/common';
-import { BasicStrategy } from './strategies/basic.strategy';
+import { BasicStrategy } from "./strategies/basic.strategy";
 
 //const useCases = [];
 @Module({

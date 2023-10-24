@@ -1,4 +1,8 @@
 import * as process from 'process';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env
+dotenv.config();
 
 export const accessTokenSecret = {
   secret: process.env.ACCESS_TOKEN_SECRET,
