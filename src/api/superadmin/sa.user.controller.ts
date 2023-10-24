@@ -30,10 +30,8 @@ export class SaUserController {
     return await this.usersRepo.getUsers();
   }
   @Post()
-  async createUser(@Body() createUserDto: CreateUserDto) {
-    const userId = await this.commandBus.execute(
-      new CreateUsersCommand(createUserDto),
-    );
+  async createUser(@Body() dto: CreateUserDto) {
+    const userId = await this.commandBus.execute(new CreateUsersCommand(dto));
     //console.log(userId);
 
     return await this.usersRepo.getUserById(userId);
