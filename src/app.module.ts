@@ -16,7 +16,8 @@ import { ApproveQuestUseCase } from './api/superadmin/use-cases/approved-quest.u
 import { SaUsersController } from './api/superadmin/sa.users.controller';
 import { DeleteController } from './api/delete-all-data/delete.controller';
 import { BasicStrategy } from './api/public/auth/strategies/basic.strategy';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 export const configModule = ConfigModule.forRoot({ isGlobal: true });
 
 const mongooseModels = [
@@ -28,6 +29,10 @@ const useCases = [CreateUsersUseCase, CreateQuestUseCase, ApproveQuestUseCase];
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+    }),
     configModule,
     MongooseModule.forRoot(process.env.MONGOOSE_URL),
     CqrsModule,
