@@ -18,6 +18,13 @@ import { DeleteController } from './api/delete-all-data/delete.controller';
 import { BasicStrategy } from './api/public/auth/strategies/basic.strategy';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+
+import * as process from 'process';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env
+dotenv.config();
+
 export const configModule = ConfigModule.forRoot({ isGlobal: true });
 
 const mongooseModels = [

@@ -3,6 +3,11 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { appSettings } from './app.settings';
+import * as process from 'process';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env
+dotenv.config();
 
 import { createWriteStream } from 'fs';
 import { get } from 'http';
@@ -27,6 +32,7 @@ async function bootstrap() {
   await app.listen(5000);
 
   // get the swagger json file (if app is running in development mode)
+
   if (process.env.NODE_ENV === 'development') {
     // write swagger ui files
     get(`${serverUrl}/swagger/swagger-ui-bundle.js`, function (response) {
