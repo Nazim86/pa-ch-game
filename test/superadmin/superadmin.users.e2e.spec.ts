@@ -42,7 +42,6 @@ describe('SuperAdmin User (e2e)', () => {
   it('Create User', async () => {
     const user = await creatingUser(httpServer, createUserDto);
     userId = user.body.id;
-    console.log(userId);
   });
 
   it('Get Users', async () => {
