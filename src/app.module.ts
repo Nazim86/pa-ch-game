@@ -13,9 +13,9 @@ import { QuestRepository } from './api/infrastructure/quests/quest.repository';
 import { QuestsQueryRepository } from './api/infrastructure/quests/quest.query.repository';
 import { CreateQuestUseCase } from './api/superadmin/use-cases/create-quest-use-case';
 import { ApproveQuestUseCase } from './api/superadmin/use-cases/approved-quest.use-case';
-import { SaUsersController } from "./api/superadmin/sa.users.controller";
-import { DeleteController } from "./api/delete-all-data/delete.controller";
-import { BasicStrategy } from "./api/public/auth/strategies/basic.strategy";
+import { SaUsersController } from './api/superadmin/sa.users.controller';
+import { DeleteController } from './api/delete-all-data/delete.controller';
+import { BasicStrategy } from './api/public/auth/strategies/basic.strategy';
 
 export const configModule = ConfigModule.forRoot({ isGlobal: true });
 
@@ -33,7 +33,12 @@ const useCases = [CreateUsersUseCase, CreateQuestUseCase, ApproveQuestUseCase];
     CqrsModule,
     MongooseModule.forFeature(mongooseModels),
   ],
-  controllers: [AppController, SaUsersController,DeleteController, QuestsController],
+  controllers: [
+    AppController,
+    SaUsersController,
+    DeleteController,
+    QuestsController,
+  ],
   providers: [
     AppService,
     UsersRepository,

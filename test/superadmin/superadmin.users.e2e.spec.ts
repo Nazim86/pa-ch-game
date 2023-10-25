@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, Logger } from "@nestjs/common";
+import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../../src/app.module';
 import {
   creatingUser,
@@ -42,6 +42,7 @@ describe('SuperAdmin User (e2e)', () => {
   it('Create User', async () => {
     const user = await creatingUser(httpServer, createUserDto);
     userId = user.body.id;
+    console.log(userId);
   });
 
   it('Get Users', async () => {
@@ -49,12 +50,12 @@ describe('SuperAdmin User (e2e)', () => {
     console.log(users.body);
   });
 
-  it('Delete user', async () => {
+  it('Delete user and status 204', async () => {
     const isDeleted = await deleteUser(httpServer, userId);
     expect(isDeleted.status).toBe(204);
   });
 
-  it('Delete user', async () => {
+  it('Delete user of non existing user,status 404', async () => {
     const isDeleted = await deleteUser(httpServer, userId);
     expect(isDeleted.status).toBe(404);
   });
