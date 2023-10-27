@@ -77,6 +77,5 @@ describe('SuperAdmin User (e2e)', () => {
 
   it('Get Users', async () => {
     const users = await getUsers(httpServer);
-    console.log(users.body);
   });
 });
