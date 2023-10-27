@@ -26,6 +26,7 @@ export class UsersRepository {
 
   async getUsers() {
     const users = await this.UserModel.find({});
+    console.log(users);
 
     return await this.usersMapping(users);
   }

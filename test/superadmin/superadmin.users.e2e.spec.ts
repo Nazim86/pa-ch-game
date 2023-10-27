@@ -6,7 +6,11 @@ import {
   deleteUser,
   getUsers,
 } from '../functions/users-functions';
-import { createUserDto } from '../data/user-data';
+import {
+  createUserDto,
+  createUserDto2,
+  createUserDTo3,
+} from '../data/user-data';
 import { appSettings } from '../../src/app.settings';
 import * as request from 'supertest';
 
@@ -57,5 +61,22 @@ describe('SuperAdmin User (e2e)', () => {
   it('Delete user of non existing user,status 404', async () => {
     const isDeleted = await deleteUser(httpServer, userId);
     expect(isDeleted.status).toBe(404);
+  });
+
+  it('Create User', async () => {
+    const user = await creatingUser(httpServer, createUserDto2);
+    console.log(user.body);
+    userId = user.body.id;
+  });
+
+  it('Create User', async () => {
+    const user = await creatingUser(httpServer, createUserDTo3);
+    console.log(user.body);
+    userId = user.body.id;
+  });
+
+  it('Get Users', async () => {
+    const users = await getUsers(httpServer);
+    console.log(users.body);
   });
 });
