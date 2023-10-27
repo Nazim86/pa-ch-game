@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { CreateQuestDto } from './dto/questCreate.dto';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateQuestCommand } from './use-cases/create-quest-use-case';
@@ -16,6 +16,11 @@ export class QuestsController {
     private readonly questQueryRepo: QuestsQueryRepository,
     @InjectModel(Quest.name) private QuestModel: Model<Quest>,
   ) {}
+
+  @Get()
+  async getQuests() {
+    return await this.questQueryRepo.getQuests();
+  }
 
   @Post()
   async createQuest(@Body() createQuestDto: CreateQuestDto) {

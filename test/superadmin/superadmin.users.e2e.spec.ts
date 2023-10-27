@@ -88,4 +88,13 @@ describe('SuperAdmin User (e2e)', () => {
 
     console.log(quests.body);
   });
+
+  it('Get quests', async () => {
+    const quests = await request(httpServer)
+      .get('/sa/quests')
+      .auth('admin', 'admin')
+      .send();
+
+    console.log(quests.body);
+  });
 });
