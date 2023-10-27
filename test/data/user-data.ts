@@ -21,3 +21,8 @@ export const createUserDTo3 = {
   phoneNumber: 'askFather1',
   age: 6,
 };
+
+export const createQuestDto = {
+  title: 'aleksdsds',
+  questContent: 'questContent',
+};

@@ -7,6 +7,7 @@ import {
   getUsers,
 } from '../functions/users-functions';
 import {
+  createQuestDto,
   createUserDto,
   createUserDto2,
   createUserDTo3,
@@ -77,5 +78,14 @@ describe('SuperAdmin User (e2e)', () => {
 
   it('Get Users', async () => {
     const users = await getUsers(httpServer);
+  });
+
+  it('Create Quest', async () => {
+    const quests = await request(httpServer)
+      .post('/sa/quests')
+      .auth('admin', 'admin')
+      .send(createQuestDto);
+
+    console.log(quests.body);
   });
 });

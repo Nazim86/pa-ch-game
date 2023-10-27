@@ -15,8 +15,8 @@ export type QuestModelTYpe = Model<Quest> & QuestModelStaticType;
 
 @Schema()
 export class Quest extends Document {
-  @Prop()
-  _id: Types.ObjectId;
+  // @Prop()
+  // _id: Types.ObjectId;
 
   @Prop({ required: true })
   title: string;
